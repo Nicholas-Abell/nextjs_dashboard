@@ -24,7 +24,19 @@ const BarChart = () => {
         datasets: [],
     });
 
-    const [chartOptions, setChartOptions] = useState({});
+    const [chartOptions, setChartOptions] = useState({
+        plugins: {
+            legend: {
+                position: 'Top',
+            },
+            title: {
+                display: true,
+                text: 'Daily Revenue',
+            }
+        },
+        maintainAspectRatio: false,
+        responive: true
+    });
 
     useEffect(() => {
         setChartData({
