@@ -1,6 +1,6 @@
 import React, { createContext } from "react";
 import BarChart from '@/components/BarChart';
-import Calendar from 'react-calendar';
+// import Calendar from 'react-calendar';
 import Header from '@/components/Header';
 import RecentOrders from '@/components/UpcomingVacation';
 import TopCards from '@/components/TopCards';
@@ -73,6 +73,7 @@ const employees = [
 ]
 
 export const DataContext = createContext(employees);
+// const [shift, setShift] = useState('2cnd');
 
 export default function Home() {
 
