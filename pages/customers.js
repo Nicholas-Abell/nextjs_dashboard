@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { DataContext } from './index.js';
 import { BsPersonFill, BsThreeDotsVertical } from 'react-icons/bs';
-import { data } from '../data/data.js';
 
 const customers = () => {
+    const data = useContext(DataContext);
     const [shift, setShift] = useState('2cnd');
 
     const shiftSelect = (e) => {
@@ -10,7 +11,7 @@ const customers = () => {
     }
 
     const addEmployee = () => {
-        
+
     }
 
     return (

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { DataContext } from '.';
 import { FaShoppingBag } from 'react-icons/fa';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import { data } from '../data/data';
 
 const Orders = () => {
+    const data = useContext(DataContext);
+
     return (
         <div className='bg-gray-100 min-h-screen'>
             <div className='flex justify-between px-4 pt-4'>
@@ -16,7 +18,6 @@ const Orders = () => {
 
                     </div>
                 </div>
-
             </div>
         </div>
     )

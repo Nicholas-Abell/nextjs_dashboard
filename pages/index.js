@@ -1,3 +1,4 @@
+import React, { createContext } from "react";
 import BarChart from '@/components/BarChart';
 import Calendar from 'react-calendar';
 import Header from '@/components/Header';
@@ -5,7 +6,55 @@ import RecentOrders from '@/components/RecentOrders';
 import TopCards from '@/components/TopCards';
 import Head from 'next/head';
 
+const employees = [
+  {
+    id: 1,
+    shift: '2cnd',
+    name: {
+      first: 'Nick',
+      last: 'Abell',
+    },
+    vacationTotal: 180,
+    vactionRemaining: 120,
+    points: -2,
+    total: 6969.69,
+    method: 'Paypal',
+    date: 'Now'
+  },
+  {
+    id: 1,
+    shift: '1st',
+    name: {
+      first: 'Maria',
+      last: 'Martinez',
+    },
+    vacationTotal: 180,
+    vactionRemaining: 80,
+    points: 0,
+    total: 6969.69,
+    method: 'Paypal',
+    date: 'Now'
+  },
+  {
+    id: 3,
+    shift: '3rd',
+    name: {
+      first: 'Aubry',
+      last: 'Williams',
+    },
+    vacationTotal: 180,
+    vactionRemaining: 80,
+    points: 0,
+    total: 6969.69,
+    method: 'Paypal',
+    date: 'Now'
+  },
+]
+
+export const DataContext = createContext(employees);
+
 export default function Home() {
+
   return (
     <>
       <Head>
@@ -14,14 +63,16 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className='bg-gray-600 min-h-screen'>
-        <Header />
-        <TopCards />
-        <div className='grid p-4 md:grid-cols-3 grid-cols-1 gap-4'>
-          <BarChart />
-          <RecentOrders />
-        </div>
-      </main>
+      <DataContext.Provider value={employees}>
+        <main className='bg-gray-600 min-h-screen'>
+          <Header />
+          <TopCards />
+          <div className='grid p-4 md:grid-cols-3 grid-cols-1 gap-4'>
+            <BarChart />
+            <RecentOrders />
+          </div>
+        </main>
+      </DataContext.Provider>
     </>
   )
 }
