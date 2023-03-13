@@ -1,4 +1,5 @@
 import BarChart from '@/components/BarChart';
+import Calendar from 'react-calendar';
 import Header from '@/components/Header';
 import RecentOrders from '@/components/RecentOrders';
 import TopCards from '@/components/TopCards';

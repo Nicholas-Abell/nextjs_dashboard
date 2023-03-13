@@ -11,8 +11,10 @@ const Orders = () => {
                 <h2>Welcome Back, Client</h2>
             </div>
             <div className='p-4'>
-                <div className='w-full m-auto p-4'>
+                <div className='w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
+                    <div>
 
+                    </div>
                 </div>
 
             </div>
