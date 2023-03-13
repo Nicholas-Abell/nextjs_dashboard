@@ -25,7 +25,7 @@ const Sidebar = ({ children }) => {
                     <span className='border-b-2 border-orange-800 w-full p-2'></span>
                 </div>
                 <div className='flex flex-col items-center'>
-                    <Link href='/customers'>
+                    <Link href='/employees'>
                         <div className='bg-purple-800 text-white p-3 rounded-lg inline-block'>
                             <RxPerson size={20} />
                         </div>

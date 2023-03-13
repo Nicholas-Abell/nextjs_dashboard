@@ -2,37 +2,58 @@ import React, { createContext } from "react";
 import BarChart from '@/components/BarChart';
 import Calendar from 'react-calendar';
 import Header from '@/components/Header';
-import RecentOrders from '@/components/RecentOrders';
+import RecentOrders from '@/components/UpcomingVacation';
 import TopCards from '@/components/TopCards';
 import Head from 'next/head';
 
 const employees = [
   {
-    id: 1,
-    shift: '2cnd',
     name: {
       first: 'Nick',
       last: 'Abell',
     },
+    id: 1,
+    shift: '2cnd',
+    position: 'Clerk',
     vacationTotal: 180,
     vactionRemaining: 120,
     points: -2,
-    total: 6969.69,
-    method: 'Paypal',
-    date: 'Now'
+    seniorityDate: 11,
   },
   {
-    id: 1,
+    name: {
+      first: 'Bob',
+      last: 'Smith',
+    },
+    id: 2,
+    position: 'Clerk',
+    shift: '2cnd',
+    vacationTotal: 180,
+    vactionRemaining: 10,
+    points: -8,
+  },
+  {
+    name: {
+      first: 'Alexa',
+      last: 'Amalia',
+    },
+    id: 6,
+    position: 'Fork Lift',
+    shift: '2cnd',
+    vacationTotal: 120,
+    vactionRemaining: 90,
+    points: 4,
+  },
+  {
+    id: 5,
     shift: '1st',
     name: {
-      first: 'Maria',
+      first: 'Mirabelle',
       last: 'Martinez',
     },
     vacationTotal: 180,
     vactionRemaining: 80,
     points: 0,
-    total: 6969.69,
-    method: 'Paypal',
     date: 'Now'
   },
   {

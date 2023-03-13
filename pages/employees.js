@@ -3,7 +3,7 @@ import { DataContext } from './index.js';
 import { BsPersonFill, BsThreeDotsVertical } from 'react-icons/bs';
 
 const customers = () => {
-    const data = useContext(DataContext);
+    const employees = useContext(DataContext);
     const [shift, setShift] = useState('2cnd');
 
     const shiftSelect = (e) => {
@@ -34,18 +34,18 @@ const customers = () => {
                     </div>
                     <ul>
                         {
-                            data.filter((order) => order.shift === shift).map((order, id) => (
+                            employees.filter((order) => order.shift === shift).map((employee, id) => (
                                 <li className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'>
                                     <div className='flex items-center'>
                                         <div className='bg-purple-100 p-3 rounded-lg'>
                                             <BsPersonFill className='text-purple-800' />
                                         </div>
-                                        <p className='pl-4'>{order.name.first} {order.name.last}</p>
+                                        <p className='pl-4'>{employee.name.first} {employee.name.last}</p>
                                     </div>
-                                    <p className='text-gray-300 sm:text-left text-right'>{order.name.first}@gmail.com</p>
-                                    <p className='hidden md:flex '>{order.date}</p>
+                                    <p className='text-gray-300 sm:text-left text-right'>{employee.points}</p>
+                                    <p className='hidden md:flex '>{ }</p>
                                     <div className='sm:flex hidden justify-between items-center'>
-                                        <p>{order.method}</p>
+                                        <p>{employee.vactionRemaining} hrs</p>
                                         <BsThreeDotsVertical />
                                     </div>
                                 </li>
