@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { DataContext } from '@/pages';
+import { DataContext } from '../pages/_app.js';
 
 const Header = () => {
-    const employee = useContext(DataContext);
+    const { employees } = useContext(DataContext);
 
     const shiftSelect = (e) => {
         setShift(e.target.value)

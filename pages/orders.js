@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import { DataContext } from '.';
+import { DataContext } from '../pages/_app.js';
 import { FaShoppingBag } from 'react-icons/fa';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
 const Orders = () => {
-    const data = useContext(DataContext);
+    const { employees } = useContext(DataContext);
 
     return (
         <div className='bg-gray-100 min-h-screen'>
