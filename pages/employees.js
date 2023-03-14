@@ -3,10 +3,10 @@ import { DataContext } from './_app.js';
 import { BsPersonFill, BsThreeDotsVertical } from 'react-icons/bs';
 
 const customers = () => {
-    const { employees, shift, setShift, shiftSelect } = useContext(DataContext);
+    const { employees, shift, employeeList, setEmployeeList, handleEmployeeClick } = useContext(DataContext);
 
     const addEmployee = () => {
-
+        // setEmployeeList([...employees, employee])
     }
 
     return (
@@ -24,8 +24,8 @@ const customers = () => {
                     </div>
                     <ul>
                         {
-                            employees.filter((employee) => employee.shift === shift).map((employee, id) => (
-                                <li className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'>
+                            employees.filter((employee) => employee.shift === shift).map((employee) => (
+                                <li key={employee.id} className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'>
                                     <div className='flex items-center'>
                                         <div className='bg-purple-100 p-3 rounded-lg'>
                                             <BsPersonFill className='text-purple-800' />
@@ -36,7 +36,7 @@ const customers = () => {
                                     <p className='hidden md:flex '>{ }</p>
                                     <div className='sm:flex hidden justify-between items-center'>
                                         <p>{employee.vactionRemaining} hrs</p>
-                                        <BsThreeDotsVertical />
+                                        <BsThreeDotsVertical id={employee.id} onClick={() => handleEmployeeClick(employee)} className='z-10 hover:text-gray-400' />
                                     </div>
                                 </li>
                             ))

@@ -6,8 +6,8 @@ const TopCards = () => {
     const { employees, shift } = useContext(DataContext);
 
     return (
-        <div>
-            <h2>In</h2>
+        <div className='pt-4'>
+            <h2 className='pl-4 text-green-400 border-b-2'>In</h2>
             <div className='w-full flex items-center py-4 gap-4 pl-4'>
                 {
                     employees.filter(employee => employee.shift === shift && employee.worksToday === true).map((employee) => (
@@ -23,7 +23,7 @@ const TopCards = () => {
                     ))
                 }
             </div>
-            <h2>Out</h2>
+            <h2 className='pl-4 text-red-600 border-b-2'>Out</h2>
             <div className='w-full flex items-center py-4 gap-4 pl-4'>
                 {
                     employees.filter(employee => employee.shift === shift && employee.worksToday !== true).map((employee) => (

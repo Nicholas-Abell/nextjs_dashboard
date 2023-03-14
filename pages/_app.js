@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, use } from 'react';
 import Sidebar from '@/components/Sidebar'
 import '@/styles/globals.css'
 
@@ -75,13 +75,22 @@ export const DataContext = createContext(employees);
 
 export default function App({ Component, pageProps }) {
   const [shift, setShift] = useState('2cnd');
+  const [employeeList, setEmployeeList] = useState(employees);
 
   const shiftSelect = (e) => {
     setShift(e.target.value)
   }
 
+  const handleEmployeeClick = (employee) => {
+    employeeList.map((emp) => {
+      if (emp.id === employee.id) {
+        console.log(employee.name.first + ' ' + employee.name.last)
+      }
+    })
+  }
+
   return (
-    <DataContext.Provider value={{ employees, shift, setShift, shiftSelect }}>
+    <DataContext.Provider value={{ employees, shift, setShift, shiftSelect, employeeList, setEmployeeList, handleEmployeeClick }}>
       <Sidebar>
         <Component {...pageProps} />
       </Sidebar>
