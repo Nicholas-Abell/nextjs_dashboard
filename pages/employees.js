@@ -3,7 +3,7 @@ import { DataContext } from './_app.js';
 import { BsPersonFill, BsThreeDotsVertical } from 'react-icons/bs';
 
 const customers = () => {
-    const { shift, employeeList, setEmployeeList, handleEmployeeClick, setEmployeeScreen } = useContext(DataContext);
+    const { shift, employeeList, handleEmployeeClick, setNewEmployeeScreen } = useContext(DataContext);
 
     return (
         <div className='bg-gray-300 min-h-screen'>
@@ -37,7 +37,7 @@ const customers = () => {
                                 </li>
                             ))
                         }
-                        <li onClick={() => setEmployeeScreen(true)} className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'>+ Add Employee</li>
+                        <li onClick={() => setNewEmployeeScreen(true)} className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'>+ Add Employee</li>
                     </ul>
                 </div>
             </div>

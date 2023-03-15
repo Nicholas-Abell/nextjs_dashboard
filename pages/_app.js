@@ -73,7 +73,8 @@ export const DataContext = createContext(employees);
 export default function App({ Component, pageProps }) {
   const [shift, setShift] = useState('2cnd');
   const [employeeList, setEmployeeList] = useState(employees);
-  const [employeeScreen, setEmployeeScreen] = useState(false);
+  const [newEmployeeScreen, setNewEmployeeScreen] = useState(false);
+  const [editEmployeeScreen, setEditEmployeeScreen] = useState(false);
 
   const shiftSelect = (e) => {
     setShift(e.target.value)
@@ -88,7 +89,7 @@ export default function App({ Component, pageProps }) {
   }
 
   return (
-    <DataContext.Provider value={{ employees, shift, setShift, shiftSelect, employeeList, setEmployeeList, handleEmployeeClick, employeeScreen, setEmployeeScreen }}>
+    <DataContext.Provider value={{ employees, shift, setShift, shiftSelect, employeeList, setEmployeeList, handleEmployeeClick, newEmployeeScreen, setNewEmployeeScreen, editEmployeeScreen, setEditEmployeeScreen }}>
       <Sidebar>
         <Component {...pageProps} />
       </Sidebar>

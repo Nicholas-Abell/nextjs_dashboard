@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { DataContext } from '@/pages/_app';
 
-const NewEmployeeForm = () => {
-    const { newEmployeeScreen, setNewEmployeeScreen, employeeList, setEmployeeList } = useContext(DataContext);
+const EditEmployeeForm = () => {
+    const { editEmployeeScreen, setEditEmployeeScreen, employeeList, setEmployeeList } = useContext(DataContext);
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -37,12 +37,13 @@ const NewEmployeeForm = () => {
             points: points
         }])
         clearInput();
-        setNewEmployeeScreen(false);
+        setEditEmployeeScreen(false);
     }
 
+
     return (
-        <div className='text-black z-20 absolute w-full h-full right-0 m-auto bg-black border rounded-lg items-center flex justify-center' style={newEmployeeScreen ? { display: 'flex' } : { display: 'none' }}>
-            <AiFillCloseCircle onClick={() => setNewEmployeeScreen(false)} size={50} className='text-white absolute top-4 right-4 hover:text-gray-500 cursor-pointer' />
+        <div className='text-black z-20 absolute w-full h-full right-0 m-auto bg-black border rounded-lg items-center flex justify-center' style={editEmployeeScreen ? { display: 'flex' } : { display: 'none' }}>
+            <AiFillCloseCircle onClick={() => setEmployeeScreen(false)} size={50} className='text-white absolute top-4 right-4 hover:text-gray-500 cursor-pointer' />
             <form onSubmit={(e) => e.preventDefault} className='flex flex-col gap-4 pt-20 bg-slate-800 p-32 rounded-lg items-end justify-center'>
                 <div>
                     <label className='text-white text-xl font-bold'>First: </label>
@@ -73,13 +74,11 @@ const NewEmployeeForm = () => {
                         <label className='text-white text-xl font-bold underline'>Vacation</label>
                         <input onChange={(e) => setVactionTotal(e.target.value)} value={vacationTotal} type='number' className='text-black w-16 h-8 rounded-lg text-center'></input>
                     </div>
-                </div>
-                <div className='w-full flex items-center justify-center mt-8'>
-                    <button type='submit' onClick={addEmployee} className='bg-white w-[120px] h-[50px] rounded-lg text-lg font-bold hover:bg-slate-300'>Add</button>
+                    <button onClick={addEmployee}>Add</button>
                 </div>
             </form>
         </div>
     )
 }
 
-export default NewEmployeeForm;
+export default EditEmployeeForm;
