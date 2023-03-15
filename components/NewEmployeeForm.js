@@ -13,7 +13,6 @@ const NewEmployeeForm = () => {
     const [vacationTotal, setVactionTotal] = useState(0);
 
     const clearInput = () => {
-        setEmployeeScreen(false);
         setFirstName('');
         setLastName('');
         setPosition('');
@@ -37,6 +36,8 @@ const NewEmployeeForm = () => {
             vactionRemaining: vacationTotal,
             points: points
         }])
+        clearInput();
+        setEmployeeScreen(false);
     }
 
 
@@ -46,15 +47,15 @@ const NewEmployeeForm = () => {
             <form onSubmit={(e) => e.preventDefault} className='flex flex-col gap-4 pt-20 bg-slate-800 p-32 rounded-lg items-end justify-center'>
                 <div>
                     <label className='text-white text-xl font-bold'>First: </label>
-                    <input onChange={(e) => setFirstName(e.target.value)} type='text' className=' rounded-lg text-center' />
+                    <input onChange={(e) => setFirstName(e.target.value)} value={firstName} type='text' className=' rounded-lg text-center' />
                 </div>
                 <div>
                     <label className='text-white text-xl font-bold'>Last: </label>
-                    <input onChange={(e) => setLastName(e.target.value)} type='text' className='rounded-lg text-center' />
+                    <input onChange={(e) => setLastName(e.target.value)} value={lastName} type='text' className='rounded-lg text-center' />
                 </div>
                 <div>
                     <label className='text-white text-xl font-bold'>Position: </label>
-                    <input onChange={(e) => setPosition(e.target.value)} type='text' className='rounded-lg text-center' />
+                    <input onChange={(e) => setPosition(e.target.value)} value={position} type='text' className='rounded-lg text-center' />
                 </div>
                 <div className='flex gap-8 pt-4'>
                     <div className='flex flex-col items-center justify-center gap-4'>
@@ -67,11 +68,11 @@ const NewEmployeeForm = () => {
                     </div>
                     <div className='flex flex-col justify-center items-center gap-4'>
                         <label className='text-white text-xl font-bold underline'>Points</label>
-                        <input onChange={(e) => setPoints(e.target.value)} type='number' className='text-black w-16 h-8 rounded-lg text-center'></input>
+                        <input onChange={(e) => setPoints(e.target.value)} value={points} type='number' className='text-black w-16 h-8 rounded-lg text-center'></input>
                     </div>
                     <div className='flex flex-col justify-center items-center gap-4'>
                         <label className='text-white text-xl font-bold underline'>Vacation</label>
-                        <input onChange={(e) => setVactionTotal(e.target.value)} type='number' className='text-black w-16 h-8 rounded-lg text-center'></input>
+                        <input onChange={(e) => setVactionTotal(e.target.value)} value={vacationTotal} type='number' className='text-black w-16 h-8 rounded-lg text-center'></input>
                     </div>
                     <button onClick={addEmployee}>Add</button>
                 </div>
