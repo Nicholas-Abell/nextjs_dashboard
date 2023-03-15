@@ -15,7 +15,6 @@ const employees = [
     vacationTotal: 180,
     vactionRemaining: 120,
     points: -2,
-    seniorityDate: 11,
   },
   {
     name: {
@@ -54,7 +53,6 @@ const employees = [
     vacationTotal: 180,
     vactionRemaining: 80,
     points: 0,
-    date: 'Now'
   },
   {
     id: 3,
@@ -67,9 +65,6 @@ const employees = [
     vacationTotal: 180,
     vactionRemaining: 80,
     points: 0,
-    total: 6969.69,
-    method: 'Paypal',
-    date: 'Now'
   },
 ]
 
@@ -78,6 +73,7 @@ export const DataContext = createContext(employees);
 export default function App({ Component, pageProps }) {
   const [shift, setShift] = useState('2cnd');
   const [employeeList, setEmployeeList] = useState(employees);
+  const [employeeScreen, setEmployeeScreen] = useState(false);
 
   const shiftSelect = (e) => {
     setShift(e.target.value)
@@ -92,7 +88,7 @@ export default function App({ Component, pageProps }) {
   }
 
   return (
-    <DataContext.Provider value={{ employees, shift, setShift, shiftSelect, employeeList, setEmployeeList, handleEmployeeClick }}>
+    <DataContext.Provider value={{ employees, shift, setShift, shiftSelect, employeeList, setEmployeeList, handleEmployeeClick, employeeScreen, setEmployeeScreen }}>
       <Sidebar>
         <Component {...pageProps} />
       </Sidebar>

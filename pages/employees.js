@@ -3,11 +3,7 @@ import { DataContext } from './_app.js';
 import { BsPersonFill, BsThreeDotsVertical } from 'react-icons/bs';
 
 const customers = () => {
-    const { employees, shift, employeeList, setEmployeeList, handleEmployeeClick } = useContext(DataContext);
-
-    const addEmployee = () => {
-        // setEmployeeList([...employees, employee])
-    }
+    const { shift, employeeList, setEmployeeList, handleEmployeeClick, setEmployeeScreen } = useContext(DataContext);
 
     return (
         <div className='bg-gray-300 min-h-screen'>
@@ -24,7 +20,7 @@ const customers = () => {
                     </div>
                     <ul>
                         {
-                            employees.filter((employee) => employee.shift === shift).map((employee) => (
+                            employeeList.filter((employee) => employee.shift === shift).map((employee) => (
                                 <li key={employee.id} className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'>
                                     <div className='flex items-center'>
                                         <div className='bg-purple-100 p-3 rounded-lg'>
@@ -41,7 +37,7 @@ const customers = () => {
                                 </li>
                             ))
                         }
-                        <li className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'>+ Add Employee</li>
+                        <li onClick={() => setEmployeeScreen(true)} className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'>+ Add Employee</li>
                     </ul>
                 </div>
             </div>

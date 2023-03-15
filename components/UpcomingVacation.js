@@ -4,14 +4,14 @@ import { DataContext } from '@/pages/_app.js';
 
 const RecentOrders = () => {
 
-    const { employees, shift } = useContext(DataContext);
+    const { employeeList, shift } = useContext(DataContext);
 
     return (
         <div className='w-full col-span-1 relative lg:h-[70vh] h-[50vh] m-auto p-4 border rounded-lg bg-white overflow-scroll'>
             <h1>Upcoming Vacation</h1>
             <ul>
                 {
-                    employees.filter(employee => employee.shift === shift).map((employee, id) => {
+                    employeeList.filter(employee => employee.shift === shift).map((employee, id) => {
                         return (
                             <li key={id} className='bg-gray-50 hover:bg-gray-100 rounded-lg my-4 flex p-2 items-center cursor-pointer justify-between'>
                                 <div className='flex'>
