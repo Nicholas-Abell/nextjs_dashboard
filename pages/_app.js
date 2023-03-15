@@ -75,6 +75,7 @@ export default function App({ Component, pageProps }) {
   const [employeeList, setEmployeeList] = useState(employees);
   const [newEmployeeScreen, setNewEmployeeScreen] = useState(false);
   const [editEmployeeScreen, setEditEmployeeScreen] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState();
 
   const shiftSelect = (e) => {
     setShift(e.target.value)
@@ -84,12 +85,23 @@ export default function App({ Component, pageProps }) {
     employeeList.map((emp) => {
       if (emp.id === employee.id) {
         console.log(employee.name.first + ' ' + employee.name.last)
+        setEditEmployeeScreen(true);
+        setSelectedEmployee(employee);
+        console.log(employee);
       }
     })
   }
 
   return (
-    <DataContext.Provider value={{ employees, shift, setShift, shiftSelect, employeeList, setEmployeeList, handleEmployeeClick, newEmployeeScreen, setNewEmployeeScreen, editEmployeeScreen, setEditEmployeeScreen }}>
+    <DataContext.Provider
+      value={{
+        employees, shift, setShift,
+        shiftSelect, employeeList, setEmployeeList,
+        handleEmployeeClick, newEmployeeScreen,
+        setNewEmployeeScreen,
+        editEmployeeScreen, setEditEmployeeScreen,
+        selectedEmployee, setSelectedEmployee
+      }}>
       <Sidebar>
         <Component {...pageProps} />
       </Sidebar>

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { DataContext } from '../pages/_app.js';
-import { BsPersonFill } from 'react-icons/bs'
+import { BsPersonFill } from 'react-icons/bs';
 
 const TopCards = () => {
     const { shift, employeeList } = useContext(DataContext);
@@ -11,7 +11,7 @@ const TopCards = () => {
             <div className='w-full flex items-center py-4 gap-4 pl-4'>
                 {
                     employeeList.filter(employee => employee.shift === shift && employee.worksToday === true).map((employee) => (
-                        <div className='bg-white border rounded-lg flex flex-col items-center justify-around w-[120px] h-[120px] flex-wrap'>
+                        <div key={employee.id} className='bg-white border rounded-lg flex flex-col items-center justify-around w-[120px] h-[120px] flex-wrap'>
                             <div className='flex items-center justify-between'>
                                 <div className='bg-purple-300 p-1 rounded-lg mr-2'>
                                     <BsPersonFill className='text-purple-800' />
@@ -27,7 +27,7 @@ const TopCards = () => {
             <div className='w-full flex items-center py-4 gap-4 pl-4'>
                 {
                     employeeList.filter(employee => employee.shift === shift && employee.worksToday !== true).map((employee) => (
-                        <div className='bg-gray-300 border rounded-lg flex flex-col items-center justify-around w-[120px] h-[120px] flex-wrap'>
+                        <div key={employee.id} className='bg-gray-300 border rounded-lg flex flex-col items-center justify-around w-[120px] h-[120px] flex-wrap'>
                             <div className='flex items-center justify-between'>
                                 <div className='bg-purple-300 p-1 rounded-lg mr-2'>
                                     <BsPersonFill className='text-purple-800' />
@@ -43,4 +43,4 @@ const TopCards = () => {
     )
 }
 
-export default TopCards
+export default TopCards;
