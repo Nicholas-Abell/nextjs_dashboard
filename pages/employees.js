@@ -1,9 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { DataContext } from './_app.js';
 import { BsPersonFill, BsThreeDotsVertical } from 'react-icons/bs';
+import Link from 'next/link';
 
 const customers = () => {
-    const { shift, employeeList, handleEmployeeClick, setNewEmployeeScreen } = useContext(DataContext);
+    const { shift, employeeList, handleEmployeeClick } = useContext(DataContext);
 
     return (
         <div className='bg-gray-300 min-h-screen'>
@@ -32,12 +33,16 @@ const customers = () => {
                                     <p className='hidden md:flex '>{ }</p>
                                     <div className='sm:flex hidden justify-between items-center'>
                                         <p>{employee.vactionRemaining} hrs</p>
-                                        <BsThreeDotsVertical id={employee.id} onClick={() => handleEmployeeClick(employee)} className='z-10 hover:text-gray-400' />
+                                        <Link href='editEmployee'>
+                                            <BsThreeDotsVertical id={employee.id} onClick={() => handleEmployeeClick(employee)} className='z-10 hover:text-gray-400' />
+                                        </Link>
                                     </div>
                                 </li>
                             ))
                         }
-                        <li onClick={() => setNewEmployeeScreen(true)} className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'>+ Add Employee</li>
+                        <Link href='/addEmployee'>
+                            <li className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'>+ Add Employee</li>
+                        </Link>
                     </ul>
                 </div>
             </div>

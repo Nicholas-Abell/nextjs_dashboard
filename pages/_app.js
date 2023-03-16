@@ -85,12 +85,11 @@ export default function App({ Component, pageProps }) {
     employeeList.map((emp) => {
       if (emp.id === employee.id) {
         console.log(employee.name.first + ' ' + employee.name.last)
-        setEditEmployeeScreen(true);
         setSelectedEmployee(employee);
         console.log(employee);
       }
     })
-  }
+  };
 
   return (
     <DataContext.Provider
@@ -107,4 +106,4 @@ export default function App({ Component, pageProps }) {
       </Sidebar>
     </DataContext.Provider>
   )
-}
+};

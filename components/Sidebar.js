@@ -4,8 +4,6 @@ import { RxDashboard, RxPerson } from 'react-icons/rx';
 import { HiOutlineShoppingBag } from 'react-icons/hi';
 import { FiSettings } from 'react-icons/fi';
 import { DataContext } from '@/pages/_app';
-import NewEmployeeForm from './NewEmployeeForm';
-import EditEmployeeForm from './EditEmployeeForm';
 
 const Sidebar = ({ children }) => {
 
@@ -55,8 +53,6 @@ const Sidebar = ({ children }) => {
                 </div>
             </div>
             <main className='ml-20 w-full relative'>
-                <NewEmployeeForm />
-                <EditEmployeeForm />
                 {children}
             </main>
         </div>
