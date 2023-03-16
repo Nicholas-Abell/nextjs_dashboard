@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { useContext } from 'react';
 import { RxDashboard, RxPerson } from 'react-icons/rx';
-import { HiOutlineShoppingBag } from 'react-icons/hi';
+import { BsFillCalendarDayFill } from 'react-icons/bs';
 import { FiSettings } from 'react-icons/fi';
 import { DataContext } from '@/pages/_app';
 
@@ -36,9 +36,9 @@ const Sidebar = ({ children }) => {
                     <span className='border-b-2 border-orange-800 w-full p-2'></span>
                 </div>
                 <div className='flex flex-col items-center'>
-                    <Link href='/orders'>
+                    <Link href='/calendar'>
                         <div className='bg-purple-800 text-white p-3 rounded-lg inline-block'>
-                            <HiOutlineShoppingBag size={20} />
+                            <BsFillCalendarDayFill size={20} />
                         </div>
                     </Link>
                     <span className='border-b-2 border-orange-800 w-full p-2'></span>
