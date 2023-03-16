@@ -39,8 +39,9 @@ const EditEmployeeForm = () => {
         router.push('/employees');
     }
 
-    const deleteEmployee = (id) => {
-        const updatedEmployeeList = employeeList.filter(employee => employee.id !== id);
+    const deleteEmployee = (e) => {
+        e.preventDefault();
+        const updatedEmployeeList = employeeList.filter(employee => employee.id !== selectedEmployee.id);
         setEmployeeList(updatedEmployeeList);
         router.push('/employees');
     }
@@ -88,7 +89,7 @@ const EditEmployeeForm = () => {
                         </div>
                     </div>
                     <div className='w-full flex items-center justify-center mt-8 gap-4'>
-                        <button type='submit' onClick={() => deleteEmployee(selectedEmployee?.id)} className='bg-red-400 border-2 border-black w-[160px] h-[60px] rounded-lg text-lg font-bold hover:bg-red-800'>Remove</button>
+                        <button type='submit' onClick={deleteEmployee} className='bg-red-400 border-2 border-black w-[160px] h-[60px] rounded-lg text-lg font-bold hover:bg-red-800'>Remove</button>
                         <button type='submit' onClick={editEmployee} className='bg-white border-2 border-black w-[160px] h-[60px] rounded-lg text-lg font-bold hover:bg-slate-300'>Save Changes</button>
                     </div>
                 </form>

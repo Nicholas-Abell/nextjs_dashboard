@@ -1,4 +1,4 @@
-import React, { useState, createContext, use, useEffect } from 'react';
+import React, { useState, createContext, useEffect } from 'react';
 import Sidebar from '@/components/Sidebar'
 import '@/styles/globals.css'
 
@@ -68,7 +68,7 @@ const employees = [
   },
 ]
 
-export const DataContext = createContext(employees);
+export const DataContext = createContext();
 
 export default function App({ Component, pageProps }) {
   const [shift, setShift] = useState('2cnd');
@@ -77,9 +77,13 @@ export default function App({ Component, pageProps }) {
   const [editEmployeeScreen, setEditEmployeeScreen] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState();
 
+  useEffect(() => {
+    console.log('Employee List altered')
+  }, [employeeList])
+
   const shiftSelect = (e) => {
     setShift(e.target.value)
-  }
+  };
 
   const handleEmployeeClick = (employee) => {
     employeeList.map((emp) => {
@@ -94,7 +98,7 @@ export default function App({ Component, pageProps }) {
   return (
     <DataContext.Provider
       value={{
-        employees, shift, setShift,
+        shift, setShift,
         shiftSelect, employeeList, setEmployeeList,
         handleEmployeeClick, newEmployeeScreen,
         setNewEmployeeScreen,
