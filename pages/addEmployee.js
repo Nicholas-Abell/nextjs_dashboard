@@ -3,6 +3,7 @@ import { AiFillCloseCircle } from 'react-icons/ai';
 import { DataContext } from '@/pages/_app';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { v4 as uuidv4 } from 'uuid';
 
 const NewEmployeeForm = () => {
     const { shift, employeeList, setEmployeeList } = useContext(DataContext);
@@ -23,7 +24,7 @@ const NewEmployeeForm = () => {
                 first: firstName,
                 last: lastName,
             },
-            id: 1,
+            id: uuidv4(),
             shift: eShift,
             position: position,
             worksToday: true,

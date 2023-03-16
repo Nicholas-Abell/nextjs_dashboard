@@ -29,8 +29,8 @@ const customers = () => {
                                         </div>
                                         <p className='pl-4'>{employee.name.first} {employee.name.last}</p>
                                     </div>
-                                    <p className='text-gray-300 sm:text-left text-right'>{employee.points}</p>
-                                    <p className='hidden md:flex '>{ }</p>
+                                    <p className='text-gray-300 sm:text-left text-right' style={employee.points < -4 ? { color: 'red' } : null}>{employee.points}</p>
+                                    <p className='hidden md:flex '>{'today'}</p>
                                     <div className='sm:flex hidden justify-between items-center'>
                                         <p>{employee.vactionRemaining} hrs</p>
                                         <Link href='editEmployee'>

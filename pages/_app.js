@@ -1,6 +1,6 @@
 import React, { useState, createContext, useEffect } from 'react';
-import Sidebar from '@/components/Sidebar'
-import '@/styles/globals.css'
+import Sidebar from '@/components/Sidebar';
+import '@/styles/globals.css';
 
 const employees = [
   {
@@ -28,6 +28,19 @@ const employees = [
     vacationTotal: 180,
     vactionRemaining: 10,
     points: -8,
+  },
+  {
+    name: {
+      first: 'Alexa',
+      last: 'Amalia',
+    },
+    id: 6,
+    position: 'Fork Lift',
+    worksToday: true,
+    shift: '2cnd',
+    vacationTotal: 120,
+    vactionRemaining: 90,
+    points: 4,
   },
   {
     name: {

@@ -52,7 +52,7 @@ const Sidebar = ({ children }) => {
                     <span className='border-b-2 border-orange-800 w-full p-2'></span>
                 </div>
             </div>
-            <main className='ml-20 w-full relative'>
+            <main className='ml-20 w-full relative overflow-hidden'>
                 {children}
             </main>
         </div>
