@@ -10,22 +10,10 @@ const NewEmployeeForm = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [position, setPosition] = useState('');
-    const [eShift, setEShift] = useState('');
+    const [eShift, setEShift] = useState(shift);
     const [points, setPoints] = useState(0);
     const [vacationTotal, setVactionTotal] = useState(0);
     const router = useRouter();
-
-    useEffect(() => {
-        setEShift(shift);
-    }, []);
-
-    const clearInput = () => {
-        setFirstName('');
-        setLastName('');
-        setPosition('');
-        setPoints('');
-        setVactionTotal('');
-    }
 
     const addEmployee = (e) => {
         e.preventDefault();
@@ -43,7 +31,7 @@ const NewEmployeeForm = () => {
             vactionRemaining: vacationTotal,
             points: points
         }])
-        clearInput();
+        // clearInput();
         router.push('/employees');
     }
 
@@ -72,7 +60,6 @@ const NewEmployeeForm = () => {
                         <div className='flex flex-col items-center justify-center gap-4'>
                             <h2 className='text-white text-xl font-bold underline'>Shift</h2>
                             <select onChange={(e) => setEShift(e.target.value)} defaultValue={shift} className='text-black border rounded-lg p-2 flex justify-center items-center text-sm'>
-                                <option></option>
                                 <option value='1st'>1st</option>
                                 <option value='2cnd'>2cnd</option>
                                 <option value='3rd'>3rd</option>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { DataContext } from '@/pages/_app';
 import Link from 'next/link';
@@ -36,6 +36,12 @@ const EditEmployeeForm = () => {
             employee.id === selectedEmployee.id ? updatedEmployee : employee
         );
         setEmployeeList(updatedList);
+        router.push('/employees');
+    }
+
+    const deleteEmployee = (id) => {
+        const updatedEmployeeList = employeeList.filter(employee => employee.id !== id);
+        setEmployeeList(updatedEmployeeList);
         router.push('/employees');
     }
 
@@ -81,8 +87,9 @@ const EditEmployeeForm = () => {
                             <input onChange={(e) => setVactionTotal(e.target.value)} defaultValue={vacationTotal} placeholder={vacationTotal} type='number' className='text-black w-16 h-8 rounded-lg text-center' />
                         </div>
                     </div>
-                    <div className='w-full flex items-center justify-center mt-8'>
-                        <button type='submit' onClick={editEmployee} className='bg-white w-[160px] h-[60px] rounded-lg text-lg font-bold hover:bg-slate-300'>Save Changes</button>
+                    <div className='w-full flex items-center justify-center mt-8 gap-4'>
+                        <button type='submit' onClick={() => deleteEmployee(selectedEmployee?.id)} className='bg-red-400 border-2 border-black w-[160px] h-[60px] rounded-lg text-lg font-bold hover:bg-red-800'>Remove</button>
+                        <button type='submit' onClick={editEmployee} className='bg-white border-2 border-black w-[160px] h-[60px] rounded-lg text-lg font-bold hover:bg-slate-300'>Save Changes</button>
                     </div>
                 </form>
             </div>
