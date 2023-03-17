@@ -44,10 +44,10 @@ const employees = [
   },
   {
     name: {
-      first: 'Alexa',
+      first: 'Gary',
       last: 'Amalia',
     },
-    id: 6,
+    id: 50005156,
     position: 'Fork Lift',
     worksToday: true,
     shift: '2cnd',
@@ -79,6 +79,18 @@ const employees = [
     vactionRemaining: 80,
     points: 0,
   },
+  {
+    id: 335345,
+    shift: '3rd',
+    name: {
+      first: 'Vexalia',
+      last: 'Williams',
+    },
+    worksToday: true,
+    vacationTotal: 180,
+    vactionRemaining: 70,
+    points: 0,
+  },
 ]
 
 export const DataContext = createContext();
@@ -90,13 +102,24 @@ export default function App({ Component, pageProps }) {
   const [editEmployeeScreen, setEditEmployeeScreen] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState();
 
-  useEffect(() => {
-    console.log('Employee List altered')
-  }, [employeeList])
-
   const shiftSelect = (e) => {
     setShift(e.target.value)
   };
+
+  const employeeSelect = (employee) => {
+    // const id = e.target.value;
+    // const employee = employeeList.find((emp) => emp.id === id);
+    // setSelectedEmployee(employee);
+    // console.log(selectedEmployee)
+    employeeList.map((emp) => {
+      if (emp.id === employee.target.value) {
+        console.log(employee.name.first + ' ' + employee.name.last)
+        setSelectedEmployee(employee);
+        console.log(employee);
+      }
+    })
+
+  }
 
   const handleEmployeeClick = (employee) => {
     employeeList.map((emp) => {
@@ -108,6 +131,10 @@ export default function App({ Component, pageProps }) {
     })
   };
 
+  useEffect(() => {
+    console.log(selectedEmployee)
+  }, [selectedEmployee])
+
   return (
     <DataContext.Provider
       value={{
@@ -116,7 +143,7 @@ export default function App({ Component, pageProps }) {
         handleEmployeeClick, newEmployeeScreen,
         setNewEmployeeScreen,
         editEmployeeScreen, setEditEmployeeScreen,
-        selectedEmployee, setSelectedEmployee
+        selectedEmployee, setSelectedEmployee, employeeSelect
       }}>
       <Sidebar>
         <Component {...pageProps} />

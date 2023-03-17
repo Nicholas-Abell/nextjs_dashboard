@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import Calendar from 'react-calendar';
+import React, { useState, useEffect, useContext } from 'react';
+import { DataContext } from '@/pages/_app';
 import { Bar } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
@@ -21,6 +21,8 @@ ChartJS.register(
 )
 
 const BarChart = () => {
+    const { shift, employeeList, setEmployeeList } = useContext(DataContext);
+
     const [chartData, setChartData] = useState({
         datasets: [],
     });
@@ -32,7 +34,7 @@ const BarChart = () => {
             },
             title: {
                 display: true,
-                text: 'Daily Revenue',
+                text: 'Vaction Remaining',
             }
         },
         maintainAspectRatio: false,
@@ -41,17 +43,17 @@ const BarChart = () => {
 
     useEffect(() => {
         setChartData({
-            labels: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'],
+            labels: employeeList.filter(employee => employee.shift === shift).map((employee) => employee.name.first),
             datasets: [
                 {
-                    label: 'Sales $',
-                    data: [18127, 22201, 19490, 17938, 24182, 22475],
+                    label: 'Vacation Hrs',
+                    data: employeeList.map((employee) => employee.vactionRemaining),
                     borderColor: 'rgb(53, 162, 235)',
                     backgroundColor: 'rgb(53, 162, 235)'
                 },
             ]
         })
-    }, [])
+    }, [shift])
 
     return (
         <>
