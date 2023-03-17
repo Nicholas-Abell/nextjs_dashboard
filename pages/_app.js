@@ -106,21 +106,6 @@ export default function App({ Component, pageProps }) {
     setShift(e.target.value)
   };
 
-  const employeeSelect = (employee) => {
-    // const id = e.target.value;
-    // const employee = employeeList.find((emp) => emp.id === id);
-    // setSelectedEmployee(employee);
-    // console.log(selectedEmployee)
-    employeeList.map((emp) => {
-      if (emp.id === employee.target.value) {
-        console.log(employee.name.first + ' ' + employee.name.last)
-        setSelectedEmployee(employee);
-        console.log(employee);
-      }
-    })
-
-  }
-
   const handleEmployeeClick = (employee) => {
     employeeList.map((emp) => {
       if (emp.id === employee.id) {
@@ -143,7 +128,7 @@ export default function App({ Component, pageProps }) {
         handleEmployeeClick, newEmployeeScreen,
         setNewEmployeeScreen,
         editEmployeeScreen, setEditEmployeeScreen,
-        selectedEmployee, setSelectedEmployee, employeeSelect
+        selectedEmployee, setSelectedEmployee,
       }}>
       <Sidebar>
         <Component {...pageProps} />

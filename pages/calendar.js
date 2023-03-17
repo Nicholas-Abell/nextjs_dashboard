@@ -5,14 +5,25 @@ import interactionPlugin from '@fullcalendar/interaction'
 import { DataContext } from './_app'
 
 const Calendar = () => {
-    const { employeeList, shift, setSelectedEmployee, selectedEmployee, handleEmployeeClick, employeeSelect } = useContext(DataContext);
+    const { employeeList, shift, setSelectedEmployee, selectedEmployee } = useContext(DataContext);
     const [events, setEvents] = useState([]);
+    const [id, setId] = useState(0);
+
+    useEffect(() => {
+        console.log('id changed to: ' + id);
+        employeeList.map((employee) => {
+            if (employee.id == id) {
+                setSelectedEmployee(employee);
+                console.log(selectedEmployee);
+            }
+        })
+    }, [id])
 
     function handleDateClick(info) {
         console.log("Date clicked!");
         console.log("Clicked on: " + info.dateStr);
         const event = {
-            title: 'new event',
+            title: selectedEmployee?.name?.first + ' ' + selectedEmployee?.name?.last,
             start: info.date,
             allDay: true
         }
@@ -20,21 +31,23 @@ const Calendar = () => {
         setEvents([...events, event]);
     }
 
+
     function renderEventContent(eventInfo) {
         return (
             <div>
-                <span>{selectedEmployee?.name?.first} yhujik</span>
+                <span>{eventInfo.event.title}</span>
             </div>
         );
     }
 
     return (
         <div className='w-full h-screen p-4'>
+            <h1>{selectedEmployee?.name?.first}</h1>
             <div className='absolute top-4 w-full flex justify-center items-center mx-auto'>
-                <select onChange={employeeSelect} className='border rounded-lg p-2 w-[250px] h-[45px] flex justify-center items-center text-sm bg-gray-200'>
+                <select onChange={(e) => setId(e.target.value)} className='border rounded-lg p-2 w-[250px] h-[45px] flex justify-center items-center text-sm bg-gray-200'>
                     {
                         employeeList.filter(employee => employee.shift === shift).map((employee) => (
-                            <option key={employee.id} value={employee}>{employee?.name.first}</option>
+                            <option key={employee.id} value={employee.id}>{employee?.name.first}</option>
                         ))
                     }
                 </select>
