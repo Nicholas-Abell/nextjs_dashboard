@@ -6,8 +6,7 @@ import { DataContext } from './_app';
 import { v4 as uuidv4 } from 'uuid';
 
 const Calendar = () => {
-    const { employeeList, shift, setSelectedEmployee, selectedEmployee } = useContext(DataContext);
-    const [events, setEvents] = useState([]);
+    const { employeeList, shift, setSelectedEmployee, selectedEmployee, calendarEvents, setCalendarEvents } = useContext(DataContext);
     const [id, setId] = useState(0);
 
     useEffect(() => {
@@ -18,7 +17,7 @@ const Calendar = () => {
                 console.log(selectedEmployee);
             }
         })
-    }, [id])
+    }, [id]);
 
     function handleDateClick(info) {
         console.log("Date clicked!");
@@ -30,13 +29,13 @@ const Calendar = () => {
             id: uuidv4(),
         }
 
-        setEvents([...events, event]);
-    }
+        setCalendarEvents([...calendarEvents, event]);
+    };
 
     function handleEventClick(eventInfo) {
         console.log('Delete Clicked: ' + eventInfo.event.id)
-        const updatedEvents = events.filter((event) => event.id !== eventInfo.event.id);
-        setEvents(updatedEvents);
+        const updatedEvents = calendarEvents.filter((event) => event.id !== eventInfo.event.id);
+        setCalendarEvents(updatedEvents);
     }
 
 
@@ -51,13 +50,12 @@ const Calendar = () => {
 
     return (
         <div className='w-full h-screen p-4'>
-            <h1>{selectedEmployee?.name?.first}</h1>
             <div className='absolute top-4 w-full flex justify-center items-center mx-auto'>
                 <select onChange={(e) => setId(e.target.value)} className='border rounded-lg p-2 w-[250px] h-[45px] flex justify-center items-center text-sm bg-gray-200'>
                     <option></option>
                     {
                         employeeList.filter(employee => employee.shift === shift).map((employee) => (
-                            <option key={employee.id} value={employee.id}>{employee?.name.first}</option>
+                            <option className='text-lg' key={employee.id} value={employee.id}>{employee?.name.first}</option>
                         ))
                     }
                 </select>
@@ -67,7 +65,7 @@ const Calendar = () => {
                 initialView="dayGridMonth"
                 dateClick={handleDateClick}
                 height={'100%'}
-                events={events}
+                events={calendarEvents}
                 eventContent={renderEventContent}
                 eventClick={handleEventClick}
             />

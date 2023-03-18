@@ -101,6 +101,7 @@ export default function App({ Component, pageProps }) {
   const [newEmployeeScreen, setNewEmployeeScreen] = useState(false);
   const [editEmployeeScreen, setEditEmployeeScreen] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState();
+  const [calendarEvents, setCalendarEvents] = useState([]);
 
   const shiftSelect = (e) => {
     setShift(e.target.value)
@@ -129,6 +130,7 @@ export default function App({ Component, pageProps }) {
         setNewEmployeeScreen,
         editEmployeeScreen, setEditEmployeeScreen,
         selectedEmployee, setSelectedEmployee,
+        calendarEvents, setCalendarEvents
       }}>
       <Sidebar>
         <Component {...pageProps} />
