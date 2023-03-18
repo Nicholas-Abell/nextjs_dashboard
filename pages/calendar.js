@@ -10,6 +10,10 @@ const Calendar = () => {
     const [id, setId] = useState(0);
 
     useEffect(() => {
+        setSelectedEmployee(null);
+    }, [])
+
+    useEffect(() => {
         console.log('id changed to: ' + id);
         employeeList.map((employee) => {
             if (employee.id == id) {
@@ -28,7 +32,6 @@ const Calendar = () => {
             allDay: true,
             id: uuidv4(),
         }
-
         setCalendarEvents([...calendarEvents, event]);
     };
 
@@ -63,7 +66,7 @@ const Calendar = () => {
             <FullCalendar
                 plugins={[dayGridPlugin, interactionPlugin]}
                 initialView="dayGridMonth"
-                dateClick={handleDateClick}
+                dateClick={selectedEmployee ? handleDateClick : null}
                 height={'100%'}
                 events={calendarEvents}
                 eventContent={renderEventContent}
