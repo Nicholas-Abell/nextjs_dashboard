@@ -4,11 +4,12 @@ import '@/styles/globals.css';
 
 const employees = [
   {
+    id: 1,
     name: {
       first: 'Nick',
       last: 'Abell',
     },
-    id: 1,
+    upComingVavation: [],
     shift: '2cnd',
     position: 'Clerk',
     worksToday: true,
@@ -17,11 +18,12 @@ const employees = [
     points: -2,
   },
   {
+    id: 2,
     name: {
       first: 'Bob',
       last: 'Smith',
     },
-    id: 2,
+    upComingVavation: [],
     position: 'Clerk',
     worksToday: false,
     shift: '2cnd',

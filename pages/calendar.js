@@ -1,12 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react'
-import FullCalendar from '@fullcalendar/react' // must go before plugins
-import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
-import interactionPlugin from '@fullcalendar/interaction'
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { AiFillCloseCircle } from 'react-icons/ai'
 import { DataContext } from './_app';
 import { v4 as uuidv4 } from 'uuid';
 
 const Calendar = () => {
-    const { employeeList, shift, setSelectedEmployee, selectedEmployee, calendarEvents, setCalendarEvents } = useContext(DataContext);
+    const { employeeList, setEmployeeList, shift, setSelectedEmployee, selectedEmployee, calendarEvents, setCalendarEvents } = useContext(DataContext);
     const [id, setId] = useState(0);
 
     useEffect(() => {
@@ -24,15 +25,30 @@ const Calendar = () => {
     }, [id]);
 
     function handleDateClick(info) {
+        const eventDate = info.date;
+        const eventId = uuidv4();
+
         console.log("Date clicked!");
         console.log("Clicked on: " + info.dateStr);
         const event = {
             title: selectedEmployee?.name?.first + ' ' + selectedEmployee?.name?.last,
-            start: info.date,
+            start: eventDate,
             allDay: true,
-            id: uuidv4(),
+            id: eventId,
         }
-        setCalendarEvents([...calendarEvents, event]);
+
+        setEmployeeList(prevList => {
+            return prevList.map(employee => {
+                if (employee.id === selectedEmployee.id) {
+                    const newUpcomingVacation = [...employee.upComingVavation, { id: eventId, date: eventDate }];
+                    return { ...employee, upComingVavation: newUpcomingVacation };
+                } else {
+                    return employee;
+                }
+            });
+        });
+
+        setCalendarEvents(prevEvents => [...prevEvents, event]);
     };
 
     function handleEventClick(eventInfo) {
@@ -44,9 +60,11 @@ const Calendar = () => {
 
     function renderEventContent(eventInfo) {
         return (
-            <div className='text-center flex flex-col items-center justify-center font-bold lg:text-xl'>
+            <div className='text-center flex flex-col items-center justify-center font-bold gap-4 py-2 lg:text-xl bg-slate-700'>
                 <span>{eventInfo.event.title}</span>
-                <button onClick={() => handleEventClick(eventInfo)} className='bg-red-500 rounded-lg px-2 py-1 hover:bg-red-700 z-10'>Delete</button>
+                <div className='flex justify-center items-center'>
+                    <AiFillCloseCircle size={30} onClick={() => handleEventClick(eventInfo)} className='text-red-600 rounded-lg hover:text-red-900 z-10 cursor-pointer' />
+                </div>
             </div>
         )
     }
@@ -70,7 +88,7 @@ const Calendar = () => {
                 height={'100%'}
                 events={calendarEvents}
                 eventContent={renderEventContent}
-                eventClick={handleEventClick}
+            // eventClick={handleEventClick}
             />
 
         </div>
