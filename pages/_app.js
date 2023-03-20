@@ -1,114 +1,130 @@
 import React, { useState, createContext, useEffect } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/data/firebase-config';
 import Sidebar from '@/components/Sidebar';
 import '@/styles/globals.css';
+import { data } from 'autoprefixer';
 
-const employees = [
-  {
-    id: 1,
-    name: {
-      first: 'Nick',
-      last: 'Abell',
-    },
-    upComingVavation: [],
-    shift: '2cnd',
-    position: 'Clerk',
-    worksToday: true,
-    vacationTotal: 180,
-    vactionRemaining: 120,
-    points: -2,
-  },
-  {
-    id: 2,
-    name: {
-      first: 'Bob',
-      last: 'Smith',
-    },
-    upComingVavation: [],
-    position: 'Clerk',
-    worksToday: false,
-    shift: '2cnd',
-    vacationTotal: 180,
-    vactionRemaining: 10,
-    points: -8,
-  },
-  {
-    name: {
-      first: 'Alexa',
-      last: 'Amalia',
-    },
-    id: 6,
-    upComingVavation: [],
-    position: 'Fork Lift',
-    worksToday: true,
-    shift: '2cnd',
-    vacationTotal: 120,
-    vactionRemaining: 90,
-    points: 4,
-  },
-  {
-    name: {
-      first: 'Gary',
-      last: 'Amalia',
-    },
-    id: 50005156,
-    upComingVavation: [],
-    position: 'Fork Lift',
-    worksToday: true,
-    shift: '2cnd',
-    vacationTotal: 120,
-    vactionRemaining: 90,
-    points: 4,
-  },
-  {
-    id: 5,
-    shift: '1st',
-    upComingVavation: [],
-    name: {
-      first: 'Mirabelle',
-      last: 'Martinez',
-    },
-    worksToday: true,
-    vacationTotal: 180,
-    vactionRemaining: 80,
-    points: 0,
-  },
-  {
-    id: 3,
-    shift: '3rd',
-    upComingVavation: [],
-    name: {
-      first: 'Aubry',
-      last: 'Williams',
-    },
-    worksToday: true,
-    vacationTotal: 180,
-    vactionRemaining: 80,
-    points: 0,
-  },
-  {
-    id: 335345,
-    shift: '3rd',
-    name: {
-      first: 'Vexalia',
-      last: 'Williams',
-    },
-    worksToday: true,
-    vacationTotal: 180,
-    upComingVavation: [],
-    vactionRemaining: 70,
-    points: 0,
-  },
-]
+// const employees = [
+//   // {
+//   //   id: 1,
+//   //   name: {
+//   //     first: 'Nick',
+//   //     last: 'Abell',
+//   //   },
+//   //   upComingVavation: [],
+//   //   shift: '2cnd',
+//   //   position: 'Clerk',
+//   //   worksToday: true,
+//   //   vacationTotal: 180,
+//   //   vactionRemaining: 120,
+//   //   points: -2,
+//   // },
+//   // {
+//   //   id: 2,
+//   //   name: {
+//   //     first: 'Bob',
+//   //     last: 'Smith',
+//   //   },
+//   //   upComingVavation: [],
+//   //   position: 'Clerk',
+//   //   worksToday: false,
+//   //   shift: '2cnd',
+//   //   vacationTotal: 180,
+//   //   vactionRemaining: 10,
+//   //   points: -8,
+//   // },
+//   // {
+//   //   name: {
+//   //     first: 'Alexa',
+//   //     last: 'Amalia',
+//   //   },
+//   //   id: 6,
+//   //   upComingVavation: [],
+//   //   position: 'Fork Lift',
+//   //   worksToday: true,
+//   //   shift: '2cnd',
+//   //   vacationTotal: 120,
+//   //   vactionRemaining: 90,
+//   //   points: 4,
+//   // },
+//   // {
+//   //   name: {
+//   //     first: 'Gary',
+//   //     last: 'Amalia',
+//   //   },
+//   //   id: 50005156,
+//   //   upComingVavation: [],
+//   //   position: 'Fork Lift',
+//   //   worksToday: true,
+//   //   shift: '2cnd',
+//   //   vacationTotal: 120,
+//   //   vactionRemaining: 90,
+//   //   points: 4,
+//   // },
+//   // {
+//   //   id: 5,
+//   //   shift: '1st',
+//   //   upComingVavation: [],
+//   //   name: {
+//   //     first: 'Mirabelle',
+//   //     last: 'Martinez',
+//   //   },
+//   //   worksToday: true,
+//   //   vacationTotal: 180,
+//   //   vactionRemaining: 80,
+//   //   points: 0,
+//   // },
+//   // {
+//   //   id: 3,
+//   //   shift: '3rd',
+//   //   upComingVavation: [],
+//   //   name: {
+//   //     first: 'Aubry',
+//   //     last: 'Williams',
+//   //   },
+//   //   worksToday: true,
+//   //   vacationTotal: 180,
+//   //   vactionRemaining: 80,
+//   //   points: 0,
+//   // },
+//   // {
+//   //   id: 335345,
+//   //   shift: '3rd',
+//   //   name: {
+//   //     first: 'Vexalia',
+//   //     last: 'Williams',
+//   //   },
+//   //   worksToday: true,
+//   //   vacationTotal: 180,
+//   //   upComingVavation: [],
+//   //   vactionRemaining: 70,
+//   //   points: 0,
+//   // },
+// ]
 
 export const DataContext = createContext();
 
 export default function App({ Component, pageProps }) {
+  const usersCollectionRef = collection(db, 'employees');
   const [shift, setShift] = useState('2cnd');
-  const [employeeList, setEmployeeList] = useState(employees);
+  const [employeeList, setEmployeeList] = useState();
   const [newEmployeeScreen, setNewEmployeeScreen] = useState(false);
   const [editEmployeeScreen, setEditEmployeeScreen] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState();
   const [calendarEvents, setCalendarEvents] = useState([]);
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const data = await getDocs(usersCollectionRef);
+      setEmployeeList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    }
+    getUsers();
+  }, [])
+
+  useEffect(() => {
+    console.log(employeeList)
+  }, [employeeList])
 
   const shiftSelect = (e) => {
     setShift(e.target.value)
@@ -117,7 +133,7 @@ export default function App({ Component, pageProps }) {
   const handleEmployeeClick = (employee) => {
     employeeList.map((emp) => {
       if (emp.id === employee.id) {
-        console.log(employee.name.first + ' ' + employee.name.last)
+        console.log(employee?.name?.first + ' ' + employee?.name?.last)
         setSelectedEmployee(employee);
         console.log(employee);
       }
@@ -137,7 +153,7 @@ export default function App({ Component, pageProps }) {
         setNewEmployeeScreen,
         editEmployeeScreen, setEditEmployeeScreen,
         selectedEmployee, setSelectedEmployee,
-        calendarEvents, setCalendarEvents
+        calendarEvents, setCalendarEvents, usersCollectionRef
       }}>
       <Sidebar>
         <Component {...pageProps} />

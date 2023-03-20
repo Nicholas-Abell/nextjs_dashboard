@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { addDoc } from 'firebase/firestore';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { DataContext } from '@/pages/_app';
 import Link from 'next/link';
@@ -6,33 +7,33 @@ import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
 
 const NewEmployeeForm = () => {
-    const { shift, employeeList, setEmployeeList } = useContext(DataContext);
+    const { shift, usersCollectionRef } = useContext(DataContext);
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [position, setPosition] = useState('');
     const [eShift, setEShift] = useState(shift);
     const [points, setPoints] = useState(0);
-    const [vacationTotal, setVactionTotal] = useState(0);
+    const [vacationTotal, setVacationTotal] = useState(0);
     const router = useRouter();
 
-    const addEmployee = (e) => {
+    const addEmployee = async (e) => {
         e.preventDefault();
         console.log('Employee Added');
-        setEmployeeList([...employeeList, {
-            name: {
-                first: firstName,
-                last: lastName,
-            },
+
+        await addDoc(usersCollectionRef, {
+            firstName: firstName,
+            lastName: lastName,
             id: uuidv4(),
             shift: eShift,
             position: position,
             worksToday: true,
             vacationTotal: vacationTotal,
-            vactionRemaining: vacationTotal,
+            vacationRemaining: vacationTotal,
+            upComingVacation: null,
             points: points
-        }])
-        // clearInput();
+        })
+
         router.push('/employees');
     }
 
@@ -72,7 +73,7 @@ const NewEmployeeForm = () => {
                         </div>
                         <div className='flex flex-col justify-center items-center gap-4'>
                             <label className='text-white text-xl font-bold underline'>Vacation</label>
-                            <input onChange={(e) => setVactionTotal(e.target.value)} value={vacationTotal} type='number' className='text-black w-16 h-8 rounded-lg text-center'></input>
+                            <input onChange={(e) => setVacationTotal(e.target.value)} value={vacationTotal} type='number' className='text-black w-16 h-8 rounded-lg text-center'></input>
                         </div>
                     </div>
                     <div className='w-full flex items-center justify-center mt-8'>

@@ -1,10 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { DataContext } from './_app.js';
 import { BsPersonFill, BsThreeDotsVertical } from 'react-icons/bs';
 import Link from 'next/link';
 
 const customers = () => {
     const { shift, employeeList, handleEmployeeClick } = useContext(DataContext);
+
+    useEffect(() => {
+
+    }, [employeeList])
 
     return (
         <div className='bg-gray-300 min-h-screen'>
@@ -21,18 +25,18 @@ const customers = () => {
                     </div>
                     <ul>
                         {
-                            employeeList.filter((employee) => employee.shift === shift).map((employee) => (
+                            employeeList?.filter((employee) => employee.shift === shift).map((employee) => (
                                 <li key={employee.id} className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'>
                                     <div className='flex items-center'>
                                         <div className='bg-purple-100 p-3 rounded-lg'>
                                             <BsPersonFill className='text-purple-800' />
                                         </div>
-                                        <p className='pl-4'>{employee.name.first} {employee.name.last}</p>
+                                        <p className='pl-4'>{employee?.firstName} {employee?.lastName}</p>
                                     </div>
                                     <p className='text-gray-300 sm:text-left text-right' style={employee.points < -4 ? { color: 'red' } : null}>{employee.points}</p>
                                     <p className='hidden md:flex '>{'today'}</p>
                                     <div className='sm:flex hidden justify-between items-center'>
-                                        <p>{employee.vactionRemaining} hrs</p>
+                                        <p>{employee.vacationRemaining} hrs</p>
                                         <Link href='editEmployee'>
                                             <BsThreeDotsVertical id={employee.id} onClick={() => handleEmployeeClick(employee)} className='z-10 hover:text-gray-400' />
                                         </Link>

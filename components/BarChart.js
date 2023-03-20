@@ -43,11 +43,11 @@ const BarChart = () => {
 
     useEffect(() => {
         setChartData({
-            labels: employeeList.filter(employee => employee.shift === shift).map((employee) => employee.name.first),
+            labels: employeeList?.filter(employee => employee.shift === shift).map((employee) => employee?.fisrtName),
             datasets: [
                 {
                     label: 'Vacation Hrs',
-                    data: employeeList.map((employee) => employee.vactionRemaining),
+                    data: employeeList?.map((employee) => employee.vactionRemaining),
                     borderColor: 'rgb(53, 162, 235)',
                     backgroundColor: 'rgb(53, 162, 235)'
                 },

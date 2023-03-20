@@ -11,7 +11,7 @@ const RecentOrders = () => {
             <h1>Upcoming Vacation</h1>
             <ul>
                 {
-                    employeeList.filter(employee => employee.shift === shift && employee.upComingVavation.length > 0).map((employee, id) => {
+                    employeeList?.filter(employee => employee?.shift === shift && employee?.upComingVacation?.length > 0).map((employee, id) => {
                         return (
                             <li key={id} className='bg-gray-50 hover:bg-gray-100 rounded-lg my-4 flex p-2 items-center cursor-pointer justify-between'>
                                 <div className='flex'>
@@ -21,7 +21,7 @@ const RecentOrders = () => {
                                     <div className='pl-4'>
                                         <p className='text-gray-800 font-bold'>{employee.name.first}</p>
                                         <ul>
-                                            {employee.upComingVavation.map((vacay) => (
+                                            {employee.upComingVacation.map((vacay) => (
                                                 <li>{vacay}</li>
                                             ))}
                                         </ul>

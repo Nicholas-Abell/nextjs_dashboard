@@ -3,39 +3,38 @@ import { AiFillCloseCircle } from 'react-icons/ai';
 import { DataContext } from '@/pages/_app';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { updateDoc, doc } from 'firebase/firestore';
+import { db } from '@/data/firebase-config';
 
 const EditEmployeeForm = () => {
     const { employeeList, setEmployeeList, selectedEmployee, shift } = useContext(DataContext);
 
-    const [firstName, setFirstName] = useState(selectedEmployee?.name.first);
-    const [lastName, setLastName] = useState(selectedEmployee?.name.last);
+    const [firstName, setFirstName] = useState(selectedEmployee?.firstName);
+    const [lastName, setLastName] = useState(selectedEmployee?.lastName);
     const [position, setPosition] = useState(selectedEmployee?.position);
     const [eShift, setEShift] = useState(shift);
     const [points, setPoints] = useState(selectedEmployee?.points);
-    const [vacationTotal, setVactionTotal] = useState(selectedEmployee?.vacationTotal);
+    const [vacationTotal, setVacationTotal] = useState(selectedEmployee?.vacationTotal);
     const router = useRouter();
 
-    const editEmployee = (e) => {
+    const editEmployee = async (e) => {
         e.preventDefault();
         console.log('Employee Edited');
+        const userDoc = doc(db, 'employees', selectedEmployee?.id)
+
         const updatedEmployee = {
             ...selectedEmployee,
-            name: {
-                first: firstName,
-                last: lastName,
-            },
-            id: Math.random(2000),
+            firstName: firstName,
+            lastName: lastName,
             shift: eShift,
             position: position,
             worksToday: true,
+            vacationRemaining: vacationTotal,
             vacationTotal: vacationTotal,
-            vactionRemaining: vacationTotal,
             points: points
         }
-        const updatedList = employeeList.map((employee) =>
-            employee.id === selectedEmployee.id ? updatedEmployee : employee
-        );
-        setEmployeeList(updatedList);
+
+        await updateDoc(userDoc, updatedEmployee)
         router.push('/employees');
     }
 
@@ -54,7 +53,7 @@ const EditEmployeeForm = () => {
                 </Link>
                 <form className='flex flex-col gap-4 pt-20 bg-slate-700 md:w-[80%] p-8  rounded-lg items-center justify-center'>
                     <div className='w-full lg:mb-8'>
-                        <h1 className='text-center text-white text-2xl font-bold'>{selectedEmployee?.name.first} {selectedEmployee?.name.last}</h1>
+                        <h1 className='text-center text-white text-2xl font-bold'>{selectedEmployee?.firstName} {selectedEmployee?.lastName}</h1>
                     </div>
                     <div className='flex flex-col items-end gap-4'>
                         <div>
@@ -85,7 +84,7 @@ const EditEmployeeForm = () => {
                         </div>
                         <div className='flex flex-col justify-center items-center gap-4'>
                             <label className='text-white text-xl font-bold underline'>Vacation</label>
-                            <input onChange={(e) => setVactionTotal(e.target.value)} defaultValue={vacationTotal} placeholder={vacationTotal} type='number' className='text-black w-16 h-8 rounded-lg text-center' />
+                            <input onChange={(e) => setVacationTotal(e.target.value)} defaultValue={vacationTotal} placeholder={vacationTotal} type='number' className='text-black w-16 h-8 rounded-lg text-center' />
                         </div>
                     </div>
                     <div className='w-full flex items-center justify-center mt-8 gap-4'>

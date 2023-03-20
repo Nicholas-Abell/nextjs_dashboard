@@ -16,7 +16,7 @@ const Calendar = () => {
 
     useEffect(() => {
         console.log('id changed to: ' + id);
-        employeeList.map((employee) => {
+        employeeList?.map((employee) => {
             if (employee.id == id) {
                 setSelectedEmployee(employee);
                 console.log(selectedEmployee);
@@ -41,7 +41,7 @@ const Calendar = () => {
             return prevList.map(employee => {
                 if (employee.id === selectedEmployee.id) {
                     const newUpcomingVacation = [...employee.upComingVavation, eventDate.toString()];
-                    return { ...employee, upComingVavation: newUpcomingVacation };
+                    return { ...employee, upComingVacation: newUpcomingVacation };
                 } else {
                     return employee;
                 }
@@ -76,7 +76,7 @@ const Calendar = () => {
                     <option></option>
                     {
                         employeeList.filter(employee => employee.shift === shift).map((employee) => (
-                            <option className='text-lg' key={employee.id} value={employee.id}>{employee?.name.first}</option>
+                            <option className='text-lg' key={employee.id} value={employee.id}>{employee?.firstName}</option>
                         ))
                     }
                 </select>
