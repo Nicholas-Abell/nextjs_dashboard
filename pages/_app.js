@@ -37,6 +37,7 @@ const employees = [
       last: 'Amalia',
     },
     id: 6,
+    upComingVavation: [],
     position: 'Fork Lift',
     worksToday: true,
     shift: '2cnd',
@@ -50,6 +51,7 @@ const employees = [
       last: 'Amalia',
     },
     id: 50005156,
+    upComingVavation: [],
     position: 'Fork Lift',
     worksToday: true,
     shift: '2cnd',
@@ -60,6 +62,7 @@ const employees = [
   {
     id: 5,
     shift: '1st',
+    upComingVavation: [],
     name: {
       first: 'Mirabelle',
       last: 'Martinez',
@@ -72,6 +75,7 @@ const employees = [
   {
     id: 3,
     shift: '3rd',
+    upComingVavation: [],
     name: {
       first: 'Aubry',
       last: 'Williams',
@@ -90,6 +94,7 @@ const employees = [
     },
     worksToday: true,
     vacationTotal: 180,
+    upComingVavation: [],
     vactionRemaining: 70,
     points: 0,
   },

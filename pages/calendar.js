@@ -40,7 +40,7 @@ const Calendar = () => {
         setEmployeeList(prevList => {
             return prevList.map(employee => {
                 if (employee.id === selectedEmployee.id) {
-                    const newUpcomingVacation = [...employee.upComingVavation, { id: eventId, date: eventDate }];
+                    const newUpcomingVacation = [...employee.upComingVavation, eventDate.toString()];
                     return { ...employee, upComingVavation: newUpcomingVacation };
                 } else {
                     return employee;
