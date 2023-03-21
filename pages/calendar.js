@@ -9,15 +9,7 @@ import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '@/data/firebase-config';
 
 const Calendar = () => {
-    const { employeeList, shift, setSelectedEmployee, selectedEmployee, calendarEvents, setCalendarEvents, handleEmployeeClick } = useContext(DataContext);
-    const [employeeVacation, setEmployeeVacation] = useState([selectedEmployee?.upComingVacation])
-    const [firstName, setFirstName] = useState(selectedEmployee?.firstName);
-    const [lastName, setLastName] = useState(selectedEmployee?.lastName);
-    const [position, setPosition] = useState(selectedEmployee?.position);
-    const [eShift, setEShift] = useState(shift);
-    const [points, setPoints] = useState(selectedEmployee?.points);
-    const [vacationTotal, setVacationTotal] = useState(selectedEmployee?.vacationTotal);
-    const [vacationDays, setVacationDays] = useState(selectedEmployee?.vacationDays);
+    const { employeeList, shift, setSelectedEmployee, selectedEmployee, calendarEvents, setCalendarEvents } = useContext(DataContext);
     const [id, setId] = useState(0);
 
     useEffect(() => {
@@ -26,16 +18,23 @@ const Calendar = () => {
 
     useEffect(() => {
         console.log('id changed to: ' + id);
-        handleEmployeeClick(id)
         employeeList?.map((employee) => {
             if (employee.id == id) {
                 setSelectedEmployee(employee);
-                console.log('Selected: ' + selectedEmployee);
+                console.log(selectedEmployee);
             }
         })
-        console.log('Selected:')
-        console.log(selectedEmployee);
     }, [id]);
+
+    const updateEmployee = async (day) => {
+        const userDoc = doc(db, 'employees', id);
+        const allDays = calendarEvents.filter(event => event?.employeeId === selectedEmployee?.id)
+        const daysAdded = {
+            ...selectedEmployee,
+            vacationDays: [...allDays, day],
+        }
+        await updateDoc(userDoc, daysAdded);
+    }
 
     const handleDateClick = async (info) => {
         const eventDate = info.date;
@@ -44,35 +43,18 @@ const Calendar = () => {
         console.log("Date clicked!");
         console.log("Clicked on: " + info.dateStr);
         const event = {
-            title: selectedEmployee?.name?.first + ' ' + selectedEmployee?.name?.last,
+            title: selectedEmployee?.firstName + ' ' + selectedEmployee?.lastName,
             start: eventDate,
             allDay: true,
             id: eventId,
+            employeeId: selectedEmployee?.id
         }
-
-        const userDoc = doc(db, 'employees', selectedEmployee?.id);
-
-        const newUpcomingVacation = [...employeeVacation, eventDate.toString()];
-        // setVacationDays(newUpcomingVacation)
-
-        const updatedEmployee = {
-            ...selectedEmployee,
-            firstName: firstName,
-            lastName: lastName,
-            shift: eShift,
-            position: position,
-            worksToday: true,
-            points: points,
-            vacationDays: vacationDays,
-            vacationTotal: vacationTotal,
-        }
-
-        await updateDoc(userDoc, updatedEmployee)
 
         setCalendarEvents(prevEvents => [...prevEvents, event]);
+        updateEmployee(eventDate);
     };
 
-    function handleEventClick(eventInfo) {
+    const deleteDate = async (eventInfo) => {
         console.log('Delete Clicked: ' + eventInfo.event.id)
         const updatedEvents = calendarEvents?.filter((event) => event.id !== eventInfo.event.id);
         setCalendarEvents(updatedEvents);
@@ -84,7 +66,7 @@ const Calendar = () => {
             <div className='text-center flex flex-col items-center justify-center font-bold gap-4 py-2 lg:text-xl bg-slate-700'>
                 <span>{eventInfo.event.title}</span>
                 <div className='flex justify-center items-center'>
-                    <AiFillCloseCircle size={30} onClick={() => handleEventClick(eventInfo)} className='text-red-600 rounded-lg hover:text-red-900 z-10 cursor-pointer' />
+                    <AiFillCloseCircle size={30} onClick={() => deleteDate(eventInfo)} className='text-red-600 rounded-lg hover:text-red-900 z-10 cursor-pointer' />
                 </div>
             </div>
         )
@@ -109,7 +91,6 @@ const Calendar = () => {
                 height={'100%'}
                 events={calendarEvents}
                 eventContent={renderEventContent}
-            // eventClick={handleEventClick}
             />
 
         </div>

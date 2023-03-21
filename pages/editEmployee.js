@@ -21,7 +21,7 @@ const EditEmployeeForm = () => {
     const editEmployee = async (e) => {
         e.preventDefault();
         console.log('Employee Edited');
-        const userDoc = doc(db, 'employees', selectedEmployee?.id)
+        const userDoc = doc(db, 'employees', selectedEmployee?.id);
 
         const updatedEmployee = {
             ...selectedEmployee,

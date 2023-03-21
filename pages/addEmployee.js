@@ -30,7 +30,7 @@ const NewEmployeeForm = () => {
             worksToday: true,
             vacationTotal: vacationTotal,
             vacationRemaining: vacationTotal,
-            upComingVacation: null,
+            vacationDays: 'test',
             points: points
         })
 
