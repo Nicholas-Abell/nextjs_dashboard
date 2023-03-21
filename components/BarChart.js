@@ -21,7 +21,7 @@ ChartJS.register(
 )
 
 const BarChart = () => {
-    const { shift, employeeList, setEmployeeList } = useContext(DataContext);
+    const { shift, employeeList } = useContext(DataContext);
 
     const [chartData, setChartData] = useState({
         datasets: [],
@@ -42,12 +42,13 @@ const BarChart = () => {
     });
 
     useEffect(() => {
+        console.log(employeeList?.map((employee) => parseInt(employee?.vacationRemaining)))
         setChartData({
-            labels: employeeList?.filter(employee => employee.shift === shift).map((employee) => employee?.fisrtName),
+            labels: employeeList?.filter(employee => employee?.shift === shift).map((employee) => employee?.fisrtName),
             datasets: [
                 {
                     label: 'Vacation Hrs',
-                    data: employeeList?.map((employee) => employee.vactionRemaining),
+                    data: employeeList?.map((employee) => parseInt(employee?.vacationRemaining)),
                     borderColor: 'rgb(53, 162, 235)',
                     backgroundColor: 'rgb(53, 162, 235)'
                 },

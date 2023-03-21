@@ -22,9 +22,9 @@ const RecentOrders = () => {
                                         <p className='text-gray-800 font-bold'>{employee?.firstName}</p>
                                         <ul>
                                             {
-                                            calendarEvents.map((vacationDays) => vacationDays.map((day) => {
-                                                return <li>{day.date}</li>
-                                            }))
+                                            employee?.vacationDays?.map((days) => {
+                                                return <li>{days?.date}</li>
+                                            })
                                             }
                                         </ul>
                                     </div>

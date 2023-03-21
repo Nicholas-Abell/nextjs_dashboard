@@ -5,7 +5,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { AiFillCloseCircle } from 'react-icons/ai'
 import { DataContext } from './_app';
 import { v4 as uuidv4 } from 'uuid';
-import { updateDoc, doc, arrayUnion } from 'firebase/firestore';
+import { updateDoc, doc, arrayUnion, deleteDoc } from 'firebase/firestore';
 import { db } from '@/data/firebase-config';
 
 const Calendar = () => {
@@ -26,22 +26,12 @@ const Calendar = () => {
     }, [id]);
 
     function initialRender() {
-        calendarEvents.map((eventInfo) => {
+        calendarEvents.map((calendarEvents) => {
             const event = {
-                title: eventInfo[0].title,
-                start: eventInfo[0].start,
-                allDay: true,
-                id: eventInfo[0].id,
-                employeeId: eventInfo[0].employeeId
+                title: calendarEvents.title,
+                start: calendarEvents.date
             }
-            return (
-                <div className='text-center flex flex-col items-center justify-center font-bold gap-4 py-2 lg:text-xl bg-slate-700'>
-                    <span>{event.title}</span>
-                    <div className='flex justify-center items-center'>
-                        <AiFillCloseCircle size={30} onClick={() => deleteDate(eventInfo)} className='text-red-600 rounded-lg hover:text-red-900 z-10 cursor-pointer' />
-                    </div>
-                </div>
-            )
+            return (event)
         })
     }
 
@@ -68,7 +58,10 @@ const Calendar = () => {
             employeeId: selectedEmployee?.id
         }
 
-        setCalendarEvents(prevEvents => [...prevEvents, event]);
+        setCalendarEvents(prevEvents => [
+            ...prevEvents.slice(0, prevEvents.length),
+            event,
+        ]);
         updateEmployee(event);
     };
 
@@ -76,6 +69,7 @@ const Calendar = () => {
         console.log('Delete Clicked: ' + eventInfo.event.id)
         const updatedEvents = calendarEvents?.filter((event) => event.id !== eventInfo.event.id);
         setCalendarEvents(updatedEvents);
+        await deleteDoc(doc(db, 'employees', eventInfo.event.id));
     }
 
     function renderEventContent(eventInfo) {
@@ -108,7 +102,7 @@ const Calendar = () => {
                 dateClick={selectedEmployee ? handleDateClick : null}
                 height={'100%'}
                 events={calendarEvents}
-                initialEvents={calendarEvents}
+                initialEvents={initialRender}
                 eventContent={renderEventContent}
             />
 

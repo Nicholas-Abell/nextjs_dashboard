@@ -46,9 +46,10 @@ export default function App({ Component, pageProps }) {
   }, [employeeList]);
 
   useEffect(() => {
-    console.log('Calendar: ')
+    console.log('Calendar: ');
     console.log(calendarEvents);
-    console.log(calendarEvents.map((event) => event))
+    console.log("EmployeeList: ");
+    console.log(employeeList);
   }, [calendarEvents])
 
   const shiftSelect = (e) => {
