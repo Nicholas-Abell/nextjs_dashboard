@@ -4,14 +4,14 @@ import { DataContext } from '@/pages/_app.js';
 
 const RecentOrders = () => {
 
-    const { employeeList, shift } = useContext(DataContext);
+    const { employeeList, shift, calendarEvents } = useContext(DataContext);
 
     return (
         <div className='w-full col-span-1 relative lg:h-[70vh] h-[50vh] m-auto p-4 border rounded-lg bg-white overflow-scroll'>
             <h1>Upcoming Vacation</h1>
             <ul>
                 {
-                    employeeList?.filter(employee => employee?.shift === shift && employee?.upComingVacation?.length > 0).map((employee, id) => {
+                    employeeList?.filter(employee => employee?.shift === shift && employee?.vacationDays?.length > 0).map((employee, id) => {
                         return (
                             <li key={id} className='bg-gray-50 hover:bg-gray-100 rounded-lg my-4 flex p-2 items-center cursor-pointer justify-between'>
                                 <div className='flex'>
@@ -21,13 +21,14 @@ const RecentOrders = () => {
                                     <div className='pl-4'>
                                         <p className='text-gray-800 font-bold'>{employee?.firstName}</p>
                                         <ul>
-                                            {employee?.vacationDays?.map((vacay) => (
-                                                <li>{vacay}</li>
-                                            ))}
+                                            {
+                                            calendarEvents.map((vacationDays) => vacationDays.map((day) => {
+                                                return <li>{day.date}</li>
+                                            }))
+                                            }
                                         </ul>
                                     </div>
                                 </div>
-                                {/* <p className='lg:flex md:hidden'>{employee.seniorityDate}</p> */}
                             </li>
                         )
                     })

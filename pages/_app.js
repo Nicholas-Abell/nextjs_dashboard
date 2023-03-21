@@ -3,7 +3,6 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/data/firebase-config';
 import Sidebar from '@/components/Sidebar';
 import '@/styles/globals.css';
-import { data } from 'autoprefixer';
 
 // const employees = [
 //   // {
@@ -20,88 +19,6 @@ import { data } from 'autoprefixer';
 //   //   vactionRemaining: 120,
 //   //   points: -2,
 //   // },
-//   // {
-//   //   id: 2,
-//   //   name: {
-//   //     first: 'Bob',
-//   //     last: 'Smith',
-//   //   },
-//   //   upComingVavation: [],
-//   //   position: 'Clerk',
-//   //   worksToday: false,
-//   //   shift: '2cnd',
-//   //   vacationTotal: 180,
-//   //   vactionRemaining: 10,
-//   //   points: -8,
-//   // },
-//   // {
-//   //   name: {
-//   //     first: 'Alexa',
-//   //     last: 'Amalia',
-//   //   },
-//   //   id: 6,
-//   //   upComingVavation: [],
-//   //   position: 'Fork Lift',
-//   //   worksToday: true,
-//   //   shift: '2cnd',
-//   //   vacationTotal: 120,
-//   //   vactionRemaining: 90,
-//   //   points: 4,
-//   // },
-//   // {
-//   //   name: {
-//   //     first: 'Gary',
-//   //     last: 'Amalia',
-//   //   },
-//   //   id: 50005156,
-//   //   upComingVavation: [],
-//   //   position: 'Fork Lift',
-//   //   worksToday: true,
-//   //   shift: '2cnd',
-//   //   vacationTotal: 120,
-//   //   vactionRemaining: 90,
-//   //   points: 4,
-//   // },
-//   // {
-//   //   id: 5,
-//   //   shift: '1st',
-//   //   upComingVavation: [],
-//   //   name: {
-//   //     first: 'Mirabelle',
-//   //     last: 'Martinez',
-//   //   },
-//   //   worksToday: true,
-//   //   vacationTotal: 180,
-//   //   vactionRemaining: 80,
-//   //   points: 0,
-//   // },
-//   // {
-//   //   id: 3,
-//   //   shift: '3rd',
-//   //   upComingVavation: [],
-//   //   name: {
-//   //     first: 'Aubry',
-//   //     last: 'Williams',
-//   //   },
-//   //   worksToday: true,
-//   //   vacationTotal: 180,
-//   //   vactionRemaining: 80,
-//   //   points: 0,
-//   // },
-//   // {
-//   //   id: 335345,
-//   //   shift: '3rd',
-//   //   name: {
-//   //     first: 'Vexalia',
-//   //     last: 'Williams',
-//   //   },
-//   //   worksToday: true,
-//   //   vacationTotal: 180,
-//   //   upComingVavation: [],
-//   //   vactionRemaining: 70,
-//   //   points: 0,
-//   // },
-// ]
 
 export const DataContext = createContext();
 
@@ -123,8 +40,16 @@ export default function App({ Component, pageProps }) {
   }, [])
 
   useEffect(() => {
-    console.log(employeeList)
-  }, [employeeList])
+    if (employeeList) {
+      setCalendarEvents(employeeList.map((employee) => employee.vacationDays))
+    }
+  }, [employeeList]);
+
+  useEffect(() => {
+    console.log('Calendar: ')
+    console.log(calendarEvents);
+    console.log(calendarEvents.map((event) => event))
+  }, [calendarEvents])
 
   const shiftSelect = (e) => {
     setShift(e.target.value)
@@ -133,17 +58,10 @@ export default function App({ Component, pageProps }) {
   const handleEmployeeClick = (employee) => {
     employeeList?.map((emp) => {
       if (emp.id === employee.id) {
-        console.log(employee?.firstName + ' ' + employee?.LastName)
         setSelectedEmployee(employee);
-        console.log(employee);
       }
     })
   };
-
-  useEffect(() => {
-    console.log('Selected {App} :')
-    console.log(selectedEmployee)
-  }, [selectedEmployee])
 
   return (
     <DataContext.Provider

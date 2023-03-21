@@ -5,7 +5,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { AiFillCloseCircle } from 'react-icons/ai'
 import { DataContext } from './_app';
 import { v4 as uuidv4 } from 'uuid';
-import { updateDoc, doc } from 'firebase/firestore';
+import { updateDoc, doc, arrayUnion } from 'firebase/firestore';
 import { db } from '@/data/firebase-config';
 
 const Calendar = () => {
@@ -21,22 +21,39 @@ const Calendar = () => {
         employeeList?.map((employee) => {
             if (employee.id == id) {
                 setSelectedEmployee(employee);
-                console.log(selectedEmployee);
             }
         })
     }, [id]);
 
-    const updateEmployee = async (day) => {
-        const userDoc = doc(db, 'employees', id);
-        const allDays = calendarEvents.filter(event => event?.employeeId === selectedEmployee?.id)
-        const daysAdded = {
-            ...selectedEmployee,
-            vacationDays: [...allDays, day],
-        }
-        await updateDoc(userDoc, daysAdded);
+    function initialRender() {
+        calendarEvents.map((eventInfo) => {
+            const event = {
+                title: eventInfo[0].title,
+                start: eventInfo[0].start,
+                allDay: true,
+                id: eventInfo[0].id,
+                employeeId: eventInfo[0].employeeId
+            }
+            return (
+                <div className='text-center flex flex-col items-center justify-center font-bold gap-4 py-2 lg:text-xl bg-slate-700'>
+                    <span>{event.title}</span>
+                    <div className='flex justify-center items-center'>
+                        <AiFillCloseCircle size={30} onClick={() => deleteDate(eventInfo)} className='text-red-600 rounded-lg hover:text-red-900 z-10 cursor-pointer' />
+                    </div>
+                </div>
+            )
+        })
     }
 
-    const handleDateClick = async (info) => {
+    const updateEmployee = async (day) => {
+        const userDoc = doc(db, 'employees', id);
+        const daysAdded = {
+            vacationDays: arrayUnion(day),
+        };
+        await updateDoc(userDoc, daysAdded, { merge: true });
+    };
+
+    const handleDateClick = (info) => {
         const eventDate = info.date;
         const eventId = uuidv4();
 
@@ -45,13 +62,14 @@ const Calendar = () => {
         const event = {
             title: selectedEmployee?.firstName + ' ' + selectedEmployee?.lastName,
             start: eventDate,
+            date: eventDate.toLocaleDateString(),
             allDay: true,
             id: eventId,
             employeeId: selectedEmployee?.id
         }
 
         setCalendarEvents(prevEvents => [...prevEvents, event]);
-        updateEmployee(eventDate);
+        updateEmployee(event);
     };
 
     const deleteDate = async (eventInfo) => {
@@ -59,7 +77,6 @@ const Calendar = () => {
         const updatedEvents = calendarEvents?.filter((event) => event.id !== eventInfo.event.id);
         setCalendarEvents(updatedEvents);
     }
-
 
     function renderEventContent(eventInfo) {
         return (
@@ -71,6 +88,7 @@ const Calendar = () => {
             </div>
         )
     }
+
 
     return (
         <div className='w-full h-screen p-4'>
@@ -90,6 +108,7 @@ const Calendar = () => {
                 dateClick={selectedEmployee ? handleDateClick : null}
                 height={'100%'}
                 events={calendarEvents}
+                initialEvents={calendarEvents}
                 eventContent={renderEventContent}
             />
 
