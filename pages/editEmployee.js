@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { DataContext } from '@/pages/_app';
 import Link from 'next/link';
@@ -15,6 +15,7 @@ const EditEmployeeForm = () => {
     const [eShift, setEShift] = useState(shift);
     const [points, setPoints] = useState(selectedEmployee?.points);
     const [vacationTotal, setVacationTotal] = useState(selectedEmployee?.vacationTotal);
+    const [vacationDays, setVacationDays] = useState(selectedEmployee?.vacationDays);
     const router = useRouter();
 
     const editEmployee = async (e) => {
@@ -29,9 +30,9 @@ const EditEmployeeForm = () => {
             shift: eShift,
             position: position,
             worksToday: true,
-            vacationRemaining: vacationTotal,
+            points: points,
+            vacationDays: vacationDays,
             vacationTotal: vacationTotal,
-            points: points
         }
 
         await updateDoc(userDoc, updatedEmployee)

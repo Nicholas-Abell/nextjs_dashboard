@@ -19,15 +19,15 @@ const RecentOrders = () => {
                                         <BsPersonFill className='text-purple-800' />
                                     </div>
                                     <div className='pl-4'>
-                                        <p className='text-gray-800 font-bold'>{employee.name.first}</p>
+                                        <p className='text-gray-800 font-bold'>{employee?.firstName}</p>
                                         <ul>
-                                            {employee.upComingVacation.map((vacay) => (
+                                            {employee?.vacationDays?.map((vacay) => (
                                                 <li>{vacay}</li>
                                             ))}
                                         </ul>
                                     </div>
                                 </div>
-                                <p className='lg:flex md:hidden'>{employee.seniorityDate}</p>
+                                {/* <p className='lg:flex md:hidden'>{employee.seniorityDate}</p> */}
                             </li>
                         )
                     })

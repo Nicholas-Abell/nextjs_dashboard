@@ -131,9 +131,9 @@ export default function App({ Component, pageProps }) {
   };
 
   const handleEmployeeClick = (employee) => {
-    employeeList.map((emp) => {
+    employeeList?.map((emp) => {
       if (emp.id === employee.id) {
-        console.log(employee?.name?.first + ' ' + employee?.name?.last)
+        console.log(employee?.firstName + ' ' + employee?.LastName)
         setSelectedEmployee(employee);
         console.log(employee);
       }
@@ -141,6 +141,7 @@ export default function App({ Component, pageProps }) {
   };
 
   useEffect(() => {
+    console.log('Selected {App} :')
     console.log(selectedEmployee)
   }, [selectedEmployee])
 

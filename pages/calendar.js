@@ -5,9 +5,19 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { AiFillCloseCircle } from 'react-icons/ai'
 import { DataContext } from './_app';
 import { v4 as uuidv4 } from 'uuid';
+import { updateDoc, doc } from 'firebase/firestore';
+import { db } from '@/data/firebase-config';
 
 const Calendar = () => {
-    const { employeeList, setEmployeeList, shift, setSelectedEmployee, selectedEmployee, calendarEvents, setCalendarEvents } = useContext(DataContext);
+    const { employeeList, shift, setSelectedEmployee, selectedEmployee, calendarEvents, setCalendarEvents, handleEmployeeClick } = useContext(DataContext);
+    const [employeeVacation, setEmployeeVacation] = useState([selectedEmployee?.upComingVacation])
+    const [firstName, setFirstName] = useState(selectedEmployee?.firstName);
+    const [lastName, setLastName] = useState(selectedEmployee?.lastName);
+    const [position, setPosition] = useState(selectedEmployee?.position);
+    const [eShift, setEShift] = useState(shift);
+    const [points, setPoints] = useState(selectedEmployee?.points);
+    const [vacationTotal, setVacationTotal] = useState(selectedEmployee?.vacationTotal);
+    const [vacationDays, setVacationDays] = useState(selectedEmployee?.vacationDays);
     const [id, setId] = useState(0);
 
     useEffect(() => {
@@ -16,15 +26,18 @@ const Calendar = () => {
 
     useEffect(() => {
         console.log('id changed to: ' + id);
+        handleEmployeeClick(id)
         employeeList?.map((employee) => {
             if (employee.id == id) {
                 setSelectedEmployee(employee);
-                console.log(selectedEmployee);
+                console.log('Selected: ' + selectedEmployee);
             }
         })
+        console.log('Selected:')
+        console.log(selectedEmployee);
     }, [id]);
 
-    function handleDateClick(info) {
+    const handleDateClick = async (info) => {
         const eventDate = info.date;
         const eventId = uuidv4();
 
@@ -37,23 +50,31 @@ const Calendar = () => {
             id: eventId,
         }
 
-        setEmployeeList(prevList => {
-            return prevList.map(employee => {
-                if (employee.id === selectedEmployee.id) {
-                    const newUpcomingVacation = [...employee.upComingVavation, eventDate.toString()];
-                    return { ...employee, upComingVacation: newUpcomingVacation };
-                } else {
-                    return employee;
-                }
-            });
-        });
+        const userDoc = doc(db, 'employees', selectedEmployee?.id);
+
+        const newUpcomingVacation = [...employeeVacation, eventDate.toString()];
+        // setVacationDays(newUpcomingVacation)
+
+        const updatedEmployee = {
+            ...selectedEmployee,
+            firstName: firstName,
+            lastName: lastName,
+            shift: eShift,
+            position: position,
+            worksToday: true,
+            points: points,
+            vacationDays: vacationDays,
+            vacationTotal: vacationTotal,
+        }
+
+        await updateDoc(userDoc, updatedEmployee)
 
         setCalendarEvents(prevEvents => [...prevEvents, event]);
     };
 
     function handleEventClick(eventInfo) {
         console.log('Delete Clicked: ' + eventInfo.event.id)
-        const updatedEvents = calendarEvents.filter((event) => event.id !== eventInfo.event.id);
+        const updatedEvents = calendarEvents?.filter((event) => event.id !== eventInfo.event.id);
         setCalendarEvents(updatedEvents);
     }
 
@@ -75,7 +96,7 @@ const Calendar = () => {
                 <select onChange={(e) => setId(e.target.value)} className='border rounded-lg p-2 w-[250px] h-[45px] flex justify-center items-center text-sm bg-gray-200'>
                     <option></option>
                     {
-                        employeeList.filter(employee => employee.shift === shift).map((employee) => (
+                        employeeList?.filter(employee => employee.shift === shift).map((employee) => (
                             <option className='text-lg' key={employee.id} value={employee.id}>{employee?.firstName}</option>
                         ))
                     }

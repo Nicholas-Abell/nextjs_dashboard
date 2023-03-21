@@ -6,10 +6,6 @@ import Link from 'next/link';
 const customers = () => {
     const { shift, employeeList, handleEmployeeClick } = useContext(DataContext);
 
-    useEffect(() => {
-
-    }, [employeeList])
-
     return (
         <div className='bg-gray-300 min-h-screen'>
             <div className='flex justify-between p-4'>
@@ -33,12 +29,12 @@ const customers = () => {
                                         </div>
                                         <p className='pl-4'>{employee?.firstName} {employee?.lastName}</p>
                                     </div>
-                                    <p className='text-gray-300 sm:text-left text-right' style={employee.points < -4 ? { color: 'red' } : null}>{employee.points}</p>
+                                    <p className='text-gray-300 sm:text-left text-right' style={employee?.points < -4 ? { color: 'red' } : null}>{employee.points}</p>
                                     <p className='hidden md:flex '>{'today'}</p>
                                     <div className='sm:flex hidden justify-between items-center'>
-                                        <p>{employee.vacationRemaining} hrs</p>
+                                        <p>{employee?.vacationRemaining} hrs</p>
                                         <Link href='editEmployee'>
-                                            <BsThreeDotsVertical id={employee.id} onClick={() => handleEmployeeClick(employee)} className='z-10 hover:text-gray-400' />
+                                            <BsThreeDotsVertical id={employee?.id} onClick={() => handleEmployeeClick(employee)} className='z-10 hover:text-gray-400' />
                                         </Link>
                                     </div>
                                 </li>
